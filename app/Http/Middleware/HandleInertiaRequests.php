@@ -30,6 +30,8 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $this->addErrorsToPartialData($request);
+
         return [
             ...parent::share($request),
             'auth' => [
@@ -40,5 +42,16 @@ class HandleInertiaRequests extends Middleware
                 'location' => $request->url(),
             ],
         ];
+    }
+
+    private function addErrorsToPartialData($request): void
+    {
+        if (!$request->header('X-Inertia-Partial-Data')) {
+            return;
+        };
+
+        $only = array_filter(explode(',', $request->header('X-Inertia-Partial-Data')));
+        $only[] = 'errors';
+        $request->headers->set('X-Inertia-Partial-Data', implode(',', $only));
     }
 }
