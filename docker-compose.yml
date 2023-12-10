@@ -23,6 +23,7 @@ services:
             - "php"
             - "artisan"
             - "queue:work"
+            - "--queue=notifications"
             - "--tries=3"
             - "--sleep=10"
             - "--timeout=30"
