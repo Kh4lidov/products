@@ -6,28 +6,35 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Products\CreateProductRequest;
 use App\Http\Requests\Products\EditProductRequest;
 use App\Models\Product;
+use App\Notifications\ProductCreated;
 use Inertia\Inertia;
-use Inertia\Response as InertiaResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Notification;
 
 class ProductsController extends Controller
 {
-    public function productList(): InertiaResponse
+    public function productList()
     {
         return Inertia::render('Products/ProductList', [
-            'products' => fn () => Product::get()
+            'products' => fn () => Product::get(),
         ]);
     }
 
     public function create(CreateProductRequest $request): RedirectResponse
     {
-        Product::create([
+        $product = Product::create([
             "article" => $request->get('article'),
             "name" => $request->get('name'),
             "status" => $request->get('status'),
             "data" => $request->get('data')
         ]);
+
+        Notification::route(
+            'mail',
+            config('products.email')
+        )
+            ->notify(new ProductCreated($product));
 
         return redirect()->back();
     }
@@ -36,7 +43,10 @@ class ProductsController extends Controller
     {
         $product = Product::findOrFail($productId);
 
-        $product->article = $request->get('article');
+        if ($request->user()->is_admin) {
+            $product->article = $request->get('article');
+        }
+
         $product->name = $request->get('name');
         $product->status = $request->get('status');
         $product->data = $request->get('data');
