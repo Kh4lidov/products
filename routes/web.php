@@ -1,9 +1,9 @@
 <?php
 
+use App\Http\Controllers\Products\ProductsController;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,17 +17,15 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return redirect()->route('login');
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::prefix('/products')->middleware(['auth', 'has_role:admin,' . config('products.role')])->group(function () {
+    Route::get('/', [ProductsController::class, 'productList'])->name('products');
+    Route::post('/', [ProductsController::class, 'create'])->name('products.create');
+    Route::put('/{productId}', [ProductsController::class, 'edit'])->name('products.edit');
+    Route::delete('/{productId}', [ProductsController::class, 'delete'])->name('products.delete');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
