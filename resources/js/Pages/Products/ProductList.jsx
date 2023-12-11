@@ -7,6 +7,7 @@ import ProductDetails from "@/Components/Products/ProductDetails.jsx";
 import { INFO_CARD_MODE } from "@/Components/Common/Products/InfoCardMode.js";
 import ProductForm from "@/Components/Products/ProductForm.jsx";
 import InfoCard from "@/Components/Products/InfoCard.jsx";
+import { PRODUCT_FORM_MODE } from "@/Components/Common/Products/ProductFormMode.js";
 
 const statuses = [
     {
@@ -122,10 +123,10 @@ export default function ProductList({ products }) {
                                             );
                                         }}
                                     >
-                                        <td className="px-5 py-3 font-normal">
+                                        <td className="px-5 py-3 break-all font-normal">
                                             {p.article}
                                         </td>
-                                        <td className="px-5 py-3 font-normal">
+                                        <td className="px-5 py-3 break-all font-normal">
                                             {p.name}
                                         </td>
                                         <td className="px-5 py-3 font-normal">
@@ -135,7 +136,7 @@ export default function ProductList({ products }) {
                                                 ).name
                                             }
                                         </td>
-                                        <td className="px-5 py-3 font-normal">
+                                        <td className="px-5 py-3 brek-all font-normal">
                                             <ProductPropList props={p.data} />
                                         </td>
                                     </tr>
@@ -175,44 +176,51 @@ export default function ProductList({ products }) {
                             </div>
                         )}
                         {showInfoCard === INFO_CARD_MODE.AddProduct && (
-                            <InfoCard
-                                header="Добавить продукт"
-                                onClose={closeInfoCard}
-                            >
-                                <ProductForm
-                                    form={addForm}
-                                    statusTypes={statuses}
-                                />
+                            <div className="h-fit">
+                                <InfoCard
+                                    header="Добавить продукт"
+                                    onClose={closeInfoCard}
+                                >
+                                    <ProductForm
+                                        form={addForm}
+                                        statusTypes={statuses}
+                                    />
 
-                                <div className="my-6">
-                                    <CustomPrimaryButton
-                                        disabled={addForm.processing}
-                                        onClick={submitAdd}
-                                    >
-                                        Добавить
-                                    </CustomPrimaryButton>
-                                </div>
-                            </InfoCard>
+                                    <div className="my-6">
+                                        <CustomPrimaryButton
+                                            disabled={addForm.processing}
+                                            onClick={submitAdd}
+                                        >
+                                            Добавить
+                                        </CustomPrimaryButton>
+                                    </div>
+                                </InfoCard>
+                            </div>
                         )}
                         {showInfoCard === INFO_CARD_MODE.EditProduct && (
-                            <InfoCard
-                                header={"Редактировать " + editForm.data.name}
-                                onClose={closeInfoCard}
-                            >
-                                <ProductForm
-                                    form={editForm}
-                                    statusTypes={statuses}
-                                />
+                            <div className="h-fit">
+                                <InfoCard
+                                    header={
+                                        "Редактировать " + editForm.data.name
+                                    }
+                                    onClose={closeInfoCard}
+                                >
+                                    <ProductForm
+                                        form={editForm}
+                                        statusTypes={statuses}
+                                        mode={PRODUCT_FORM_MODE.Edit}
+                                    />
 
-                                <div className="my-6">
-                                    <CustomPrimaryButton
-                                        disabled={editForm.processing}
-                                        onClick={submitEdit}
-                                    >
-                                        Сохранить
-                                    </CustomPrimaryButton>
-                                </div>
-                            </InfoCard>
+                                    <div className="my-6">
+                                        <CustomPrimaryButton
+                                            disabled={editForm.processing}
+                                            onClick={submitEdit}
+                                        >
+                                            Сохранить
+                                        </CustomPrimaryButton>
+                                    </div>
+                                </InfoCard>
+                            </div>
                         )}
                     </div>
                 </div>
