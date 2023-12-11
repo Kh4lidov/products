@@ -1,7 +1,7 @@
 # Products Project
 <img src="https://github.com/Kh4lidov/products/blob/main/resources/images/logo.png" align="left" height="48" width="48" >
 
-Welcome to the Products project! You can use this README to set up the project locally for development.
+Welcome to the Products project! This repository contains the source code for the Product event management system. You can use this README to set up the project locally for development.
 
 ## Local Development
 
