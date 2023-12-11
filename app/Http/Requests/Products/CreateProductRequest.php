@@ -20,7 +20,7 @@ class CreateProductRequest extends FormRequest
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
             'article.required' => 'Поле "Артикул" обязательно.',

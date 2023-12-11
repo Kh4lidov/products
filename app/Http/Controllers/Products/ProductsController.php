@@ -11,10 +11,11 @@ use Inertia\Inertia;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Notification;
+use Inertia\Response as InertiaResponse;
 
 class ProductsController extends Controller
 {
-    public function productList()
+    public function productList(): InertiaResponse
     {
         return Inertia::render('Products/ProductList', [
             'products' => fn () => Product::get(),

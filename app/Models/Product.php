@@ -64,7 +64,7 @@ class Product extends Model
 
     }
 
-    public function getStatus()
+    public function getStatus(): string
     {
         return self::STATUSES[$this->status];
     }
