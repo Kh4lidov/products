@@ -1,8 +1,19 @@
 import ApplicationLogo from "@/Components/ApplicationLogo";
 import { Link } from "@inertiajs/react";
-import { MAX_WIDTH_CLASS } from "@/Components/Common/MaxWidthClass.js";
 
 export default function Guest({ children, maxWidth }) {
+    const maxWidthClass = {
+        sm: "max-w-sm",
+        md: "max-w-md",
+        lg: "max-w-lg",
+        xl: "max-w-xl",
+        "2xl": "max-w-2xl",
+        "3xl": "max-w-3xl",
+        "4xl": "max-w-4xl",
+        "5xl": "max-w-5xl",
+        "6xl": "max-w-6xl",
+    }[maxWidth];
+
     return (
         <div className="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
             <div>
@@ -13,7 +24,7 @@ export default function Guest({ children, maxWidth }) {
 
             <div
                 className={`w-full mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg ${
-                    maxWidth ? MAX_WIDTH_CLASS[maxWidth] : "max-w-md"
+                    maxWidth ? maxWidthClass : "max-w-md"
                 }`}
             >
                 {children}
