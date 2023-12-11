@@ -45,7 +45,7 @@ services:
         networks:
             - app-network
 
-    #MySQL Service
+    #PostgreSQL Service
     db:
         image: postgres:13.13
         container_name: db
