@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Middleware;
 
 use Closure;
@@ -13,12 +15,14 @@ class EnsureUserHasRole
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, ...$roles): Response
+    public function handle(Request $request, Closure $next, string $role): Response
     {
-        if (!in_array($request->user()->role, $roles)) {
-            return redirect(route('login'));
+        $user = $request->user();
+
+        if ($user->is_admin || $user->role === $role) {
+            return $next($request);
         }
 
-        return $next($request);
+        return redirect(route('login'));
     }
 }

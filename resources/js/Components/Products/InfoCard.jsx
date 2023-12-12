@@ -1,6 +1,11 @@
 import { PencilIcon } from "@heroicons/react/20/solid/index.js";
 import { TrashIcon, XMarkIcon } from "@heroicons/react/24/outline/index.js";
-import { INFO_CARD_MODE } from "@/Components/Common/Products/InfoCardMode.js";
+
+export const INFO_CARD_MODE = {
+    ProductDetails: 0,
+    AddProduct: 1,
+    EditProduct: 2,
+};
 
 export default function InfoCard({
     header,

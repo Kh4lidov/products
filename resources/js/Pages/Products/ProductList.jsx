@@ -2,12 +2,13 @@ import Layout from "@/Layouts/Layout.jsx";
 import ProductPropList from "@/Components/Products/ProductPropList.jsx";
 import { useState } from "react";
 import { router, useForm } from "@inertiajs/react";
-import CustomPrimaryButton from "@/Components/CustomPrimaryButton.jsx";
+import CustomPrimaryButton from "@/Components/UI/CustomPrimaryButton.jsx";
 import ProductDetails from "@/Components/Products/ProductDetails.jsx";
-import { INFO_CARD_MODE } from "@/Components/Common/Products/InfoCardMode.js";
+import { INFO_CARD_MODE } from "@/Components/Products/InfoCard.jsx";
 import ProductForm from "@/Components/Products/ProductForm.jsx";
 import InfoCard from "@/Components/Products/InfoCard.jsx";
-import { PRODUCT_FORM_MODE } from "@/Components/Common/Products/ProductFormMode.js";
+import { PRODUCT_FORM_MODE } from "@/Components/Products/ProductForm.jsx";
+import { Head } from "@inertiajs/react";
 
 const statuses = [
     {
@@ -21,7 +22,7 @@ const statuses = [
 ];
 
 export default function ProductList({ products }) {
-    const [showInfoCard, setShowInfoCard] = useState(null);
+    const [infoCard, setInfoCard] = useState(null);
 
     const addForm = useForm({
         article: "",
@@ -35,7 +36,7 @@ export default function ProductList({ products }) {
     const submitAdd = () => {
         addForm.post(route("products.create"), {
             only: ["products"],
-            onSuccess: closeInfoCard,
+            onSuccess: closeAddProduct,
         });
     };
 
@@ -46,7 +47,7 @@ export default function ProductList({ products }) {
             }),
             {
                 only: ["products"],
-                onSuccess: () => setShowInfoCard(INFO_CARD_MODE.ProductDetails),
+                onSuccess: () => setInfoCard(INFO_CARD_MODE.ProductDetails),
             },
         );
     };
@@ -64,31 +65,31 @@ export default function ProductList({ products }) {
     };
 
     const handleEditProduct = () => {
-        setShowInfoCard(INFO_CARD_MODE.EditProduct);
+        setInfoCard(INFO_CARD_MODE.EditProduct);
     };
 
     const closeInfoCard = () => {
-        setShowInfoCard(null);
+        setInfoCard(null);
+    };
 
-        if (showInfoCard === INFO_CARD_MODE.ProductDetails) {
-            return;
-        }
+    const closeAddProduct = () => {
+        closeInfoCard();
 
-        if (showInfoCard === INFO_CARD_MODE.AddProduct) {
-            addForm.reset();
-            addForm.errors && addForm.clearErrors();
+        addForm.reset();
+        addForm.errors && addForm.clearErrors();
+    };
 
-            return;
-        }
+    const closeEditProduct = () => {
+        closeInfoCard();
 
-        if (showInfoCard === INFO_CARD_MODE.EditProduct) {
-            editForm.errors && editForm.clearErrors();
-        }
+        editForm.errors && editForm.clearErrors();
     };
 
     return (
         <>
             <Layout>
+                <Head title="Управление продуктами" />
+
                 <div className="flex">
                     <div className="w-1/2">
                         <table className="text-left text-gray-500 text-xs">
@@ -118,7 +119,7 @@ export default function ProductList({ products }) {
                                                 JSON.stringify(p),
                                             );
                                             editForm.setData(newP);
-                                            setShowInfoCard(
+                                            setInfoCard(
                                                 INFO_CARD_MODE.ProductDetails,
                                             );
                                         }}
@@ -146,20 +147,18 @@ export default function ProductList({ products }) {
                     </div>
 
                     <div className="w-1/2">
-                        {showInfoCard === null && (
+                        {infoCard === null && (
                             <div className="flex justify-end mt-3 mr-5 h-fit">
                                 <CustomPrimaryButton
                                     onClick={() => {
-                                        setShowInfoCard(
-                                            INFO_CARD_MODE.AddProduct,
-                                        );
+                                        setInfoCard(INFO_CARD_MODE.AddProduct);
                                     }}
                                 >
                                     Добавить
                                 </CustomPrimaryButton>
                             </div>
                         )}
-                        {showInfoCard === INFO_CARD_MODE.ProductDetails && (
+                        {infoCard === INFO_CARD_MODE.ProductDetails && (
                             <div className="h-96">
                                 <InfoCard
                                     header={editForm.data.name}
@@ -175,11 +174,11 @@ export default function ProductList({ products }) {
                                 </InfoCard>
                             </div>
                         )}
-                        {showInfoCard === INFO_CARD_MODE.AddProduct && (
+                        {infoCard === INFO_CARD_MODE.AddProduct && (
                             <div className="h-fit">
                                 <InfoCard
                                     header="Добавить продукт"
-                                    onClose={closeInfoCard}
+                                    onClose={closeAddProduct}
                                 >
                                     <ProductForm
                                         form={addForm}
@@ -197,13 +196,13 @@ export default function ProductList({ products }) {
                                 </InfoCard>
                             </div>
                         )}
-                        {showInfoCard === INFO_CARD_MODE.EditProduct && (
+                        {infoCard === INFO_CARD_MODE.EditProduct && (
                             <div className="h-fit">
                                 <InfoCard
                                     header={
                                         "Редактировать " + editForm.data.name
                                     }
-                                    onClose={closeInfoCard}
+                                    onClose={closeEditProduct}
                                 >
                                     <ProductForm
                                         form={editForm}

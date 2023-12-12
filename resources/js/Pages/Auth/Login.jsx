@@ -1,12 +1,12 @@
 import { useEffect } from "react";
-import Checkbox from "@/Components/Checkbox";
+import Checkbox from "@/Components/UI/Checkbox.jsx";
 import GuestLayout from "@/Layouts/GuestLayout";
-import InputError from "@/Components/InputError";
-import InputLabel from "@/Components/InputLabel";
-import TextInput from "@/Components/TextInput";
+import InputError from "@/Components/UI/InputError.jsx";
+import InputLabel from "@/Components/UI/InputLabel.jsx";
+import TextInput from "@/Components/UI/TextInput.jsx";
 import { Head, Link, useForm, router } from "@inertiajs/react";
-import CustomPrimaryButton from "@/Components/CustomPrimaryButton.jsx";
-import CustomSecondButton from "@/Components/CustomSecondButton.jsx";
+import CustomPrimaryButton from "@/Components/UI/CustomPrimaryButton.jsx";
+import CustomSecondButton from "@/Components/UI/CustomSecondButton.jsx";
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -29,7 +29,7 @@ export default function Login({ status, canResetPassword }) {
 
     return (
         <GuestLayout maxWidth="sm">
-            <Head title="Log in" />
+            <Head title="Авторизация" />
 
             {status && (
                 <div className="mb-4 font-medium text-sm text-green-600">

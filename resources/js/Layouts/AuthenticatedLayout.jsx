@@ -1,5 +1,5 @@
-import ApplicationLogo from "@/Components/ApplicationLogo";
-import Dropdown from "@/Components/Dropdown";
+import ApplicationLogo from "@/Components/UI/ApplicationLogo.jsx";
+import Dropdown from "@/Components/UI/Dropdown.jsx";
 import { Link, usePage } from "@inertiajs/react";
 
 export default function Authenticated({ children, navigation }) {

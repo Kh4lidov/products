@@ -1,5 +1,5 @@
-import InputLabel from "@/Components/InputLabel.jsx";
-import TextInput from "@/Components/TextInput.jsx";
+import InputLabel from "@/Components/UI/InputLabel.jsx";
+import TextInput from "@/Components/UI/TextInput.jsx";
 import { TrashIcon } from "@heroicons/react/24/outline/index.js";
 
 export default function ProductProps({ data, onDataChange }) {

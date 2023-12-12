@@ -20,7 +20,7 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-Route::prefix('/products')->middleware(['auth', 'has_role:admin,' . config('products.role')])->group(function () {
+Route::prefix('/products')->middleware(['auth', 'has_role:' . config('products.role')])->group(function () {
     Route::get('/', [ProductsController::class, 'productList'])->name('products');
     Route::post('/', [ProductsController::class, 'create'])->name('products.create');
     Route::put('/{productId}', [ProductsController::class, 'edit'])->name('products.edit');

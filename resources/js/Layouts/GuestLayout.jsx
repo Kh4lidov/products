@@ -1,17 +1,10 @@
-import ApplicationLogo from "@/Components/ApplicationLogo";
+import ApplicationLogo from "@/Components/UI/ApplicationLogo.jsx";
 import { Link } from "@inertiajs/react";
 
-export default function Guest({ children, maxWidth }) {
+export default function Guest({ children, maxWidth = "md" }) {
     const maxWidthClass = {
         sm: "max-w-sm",
         md: "max-w-md",
-        lg: "max-w-lg",
-        xl: "max-w-xl",
-        "2xl": "max-w-2xl",
-        "3xl": "max-w-3xl",
-        "4xl": "max-w-4xl",
-        "5xl": "max-w-5xl",
-        "6xl": "max-w-6xl",
     }[maxWidth];
 
     return (
@@ -23,9 +16,7 @@ export default function Guest({ children, maxWidth }) {
             </div>
 
             <div
-                className={`w-full mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg ${
-                    maxWidth ? maxWidthClass : "max-w-md"
-                }`}
+                className={`w-full mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg ${maxWidthClass}`}
             >
                 {children}
             </div>

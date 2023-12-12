@@ -1,13 +1,21 @@
 # Products Project
 <img src="https://github.com/Kh4lidov/products/blob/main/resources/images/logo.png" align="left" height="48" width="48" >
 
-Welcome to the Products project! This repository contains the source code for the Product event management system. You can use this README to set up the project locally for development.
+Welcome to the Products project! This repository contains the source code for the Product management system. You can use this README to set up the project locally for development.
 
 ## Local Development
 
 Follow these steps to set up the project locally for development:
 
-### 1. Start Docker Containers
+### 1. Copy .env.example
+
+Before starting Docker containers, copy .env.example to .env.
+
+```bash
+cp .env.example .env
+```
+
+### 2. Start Docker Containers
 
 First, make sure you have Docker installed on your system. Then, run the following command to start the Docker containers:
 
@@ -15,7 +23,7 @@ First, make sure you have Docker installed on your system. Then, run the followi
 docker-compose up -d
 ```
 
-### 2. Install Composer Dependencies
+### 3. Install Composer Dependencies
 
 Once the Docker containers are up and running, install the PHP dependencies using Composer:
 
@@ -23,7 +31,7 @@ Once the Docker containers are up and running, install the PHP dependencies usin
 docker-compose exec app composer install
 ```
 
-### 3. Run Database Migrations
+### 4. Run Database Migrations
 
 To set up the database, run the following command:
 
@@ -31,7 +39,13 @@ To set up the database, run the following command:
 docker-compose exec app php artisan migrate
 ```
 
-### 4. Install JavaScript Dependencies
+### 5. Generate APP_KEY
+
+```bash
+docker-compose exec app php artisan key:generate
+```
+
+### 6. Install JavaScript Dependencies
 
 Install the JavaScript dependencies using Yarn:
 
@@ -39,7 +53,7 @@ Install the JavaScript dependencies using Yarn:
 yarn install
 ```
 
-### 5. Build Frontend Assets
+### 7. Build Frontend Assets
 
 Compile the frontend assets:
 
@@ -48,3 +62,14 @@ yarn dev
 ```
 
 Your local development environment should now be set up and ready to go!
+
+## Credentials For Testing
+
+```yaml
+admin:
+  login: admin@example.com
+  pass: admin12345
+products-manager:
+  login: products_manager@example.com
+  pass: manager12345
+```

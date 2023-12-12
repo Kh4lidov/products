@@ -1,12 +1,20 @@
-import InputLabel from "@/Components/InputLabel.jsx";
-import TextInput from "@/Components/TextInput.jsx";
-import InputError from "@/Components/InputError.jsx";
-import SelectBox from "@/Components/SelectBox.jsx";
+import InputLabel from "@/Components/UI/InputLabel.jsx";
+import TextInput from "@/Components/UI/TextInput.jsx";
+import InputError from "@/Components/UI/InputError.jsx";
+import SelectBox from "@/Components/UI/SelectBox.jsx";
 import ProductProps from "@/Components/Products/ProductProps.jsx";
 import { usePage } from "@inertiajs/react";
-import { PRODUCT_FORM_MODE } from "@/Components/Common/Products/ProductFormMode.js";
 
-export default function ProductForm({ form, statusTypes, mode }) {
+export const PRODUCT_FORM_MODE = {
+    Add: 0,
+    Edit: 1,
+};
+
+export default function ProductForm({
+    form,
+    statusTypes,
+    mode = PRODUCT_FORM_MODE.Add,
+}) {
     const { auth } = usePage().props;
 
     const handleProductDataChange = (d) => {
